@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Table, Button } from "flowbite-react";
-import CreateNew from "./CreateNew";
 import CopyExistingTenant from "./CopyExistingTenant.js";
+import TenantInfoModal from "./TenantInfoModal.js";
 
 const initialTenants = [
   {
@@ -78,6 +78,15 @@ const initialTenants = [
 
 function TenantTable() {
   const [tenants, setTenants] = useState(initialTenants);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const handleAddTenant = (newTenant) => {
+    setTenants((prevTenants) => [...prevTenants, newTenant]);
+  };
+
 
   const handleDelete = (tenantId) => {
     if (window.confirm("Are you sure you want to delete this tenant?")) {
@@ -90,8 +99,8 @@ function TenantTable() {
     <div>
       <div className="flex items-center justify-between mb-4">
         <div className="flex space-x-2">
-          <CreateNew />
-          <CopyExistingTenant />
+        <Button className="text-white bg-blue-500 hover:bg-blue-700" onClick={openModal}>Create New Tenant</Button>
+        <CopyExistingTenant />
         </div>
         <h2 className="text-lg font-semibold mx-4">Tenants</h2>
         <Button className="text-white bg-blue-500 hover:bg-blue-700">
@@ -132,6 +141,11 @@ function TenantTable() {
           ))}
         </Table.Body>
       </Table>
+      <TenantInfoModal
+        open={isModalOpen}
+        onClose={closeModal}
+        onCreateTenant={handleAddTenant} 
+      />
     </div>
   );
 }
