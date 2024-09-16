@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Table, Button } from "flowbite-react";
+import { Table, Button, Card } from "flowbite-react";
 import CopyExistingTenant from "./CopyExistingTenant.js";
 import TenantInfoModal from "./TenantInfoModal.js";
 
@@ -79,19 +79,32 @@ const initialTenants = [
 function TenantTable() {
   const [tenants, setTenants] = useState(initialTenants);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [creationLog, setCreationLog] = useState(null);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   const handleAddTenant = (newTenant) => {
     setTenants((prevTenants) => [...prevTenants, newTenant]);
-  };
 
+    setCreationLog({
+      tenantName: newTenant.name,
+      message: `Tenant creation has started for ${newTenant.name}. Updates will appear here.`,
+    });
+
+    setTimeout(() => {
+      setCreationLog(null);
+    }, 10000); // 10 seconds
+  };
 
   const handleDelete = (tenantId) => {
     if (window.confirm("Are you sure you want to delete this tenant?")) {
       const updatedTenants = tenants.filter((tenant) => tenant.id !== tenantId);
       setTenants(updatedTenants);
+
+      if (creationLog && creationLog.tenantId === tenantId) {
+        setCreationLog(null);
+      }
     }
   };
 
@@ -99,8 +112,13 @@ function TenantTable() {
     <div>
       <div className="flex items-center justify-between mb-4">
         <div className="flex space-x-2">
-        <Button className="text-white bg-blue-500 hover:bg-blue-700" onClick={openModal}>Create New Tenant</Button>
-        <CopyExistingTenant />
+          <Button
+            className="text-white bg-blue-500 hover:bg-blue-700"
+            onClick={openModal}
+          >
+            Create New Tenant
+          </Button>
+          <CopyExistingTenant />
         </div>
         <h2 className="text-lg font-semibold mx-4">Tenants</h2>
         <Button className="text-white bg-blue-500 hover:bg-blue-700">
@@ -144,8 +162,16 @@ function TenantTable() {
       <TenantInfoModal
         open={isModalOpen}
         onClose={closeModal}
-        onCreateTenant={handleAddTenant} 
+        onCreateTenant={handleAddTenant}
       />
+
+      {creationLog && (
+      <Card className="fixed top-0 start-0 z-50 flex justify-between w-full p-4 border-b border-gray-200">
+          <h3 className="text-lg font-bold">
+            Creation log for {creationLog.tenantName}</h3>
+          <p className="text-gray-500"> {creationLog.message}</p>
+        </Card>
+      )}
     </div>
   );
 }
