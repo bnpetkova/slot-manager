@@ -18,6 +18,7 @@ const datapacks = [
 const DeployDatapacks = ({ openModal, handleCloseModal }) => {
   const [filterText, setFilterText] = useState("");
   const [filterAll, setFilterAll] = useState("all");
+  const [checked, setChecked] = useState(false);
 
   const handleFilterTextChange = (e) => setFilterText(e.target.value);
   const handleFilterAllChange = (e) => setFilterAll(e.target.value);
@@ -30,12 +31,26 @@ const DeployDatapacks = ({ openModal, handleCloseModal }) => {
     return matchAll;
   });
 
+  const handleCheckboxChange = (id) => {
+    setChecked((prevChecked) => ({
+      ...prevChecked,
+      [id]: !prevChecked[id],
+    }));
+  };
+  const handleUncheckAll = () => {
+    const uncheckedItems = {};
+    datapacks.forEach((datapack) => {
+      uncheckedItems[datapack.id] = false;
+    });
+    setChecked(uncheckedItems);
+  };
+
   return (
     <Modal show={openModal} onClose={handleCloseModal}>
       <Modal.Header>Deploy Datapacks</Modal.Header>
       <Modal.Body>
         <div className="space-y-4">
-          <div className="flex space-x-4">
+          <div className="flex space-x-4 items-center">
             <div>
               <Label htmlFor="filterText">Filter (Name, Description)</Label>
               <TextInput
@@ -55,11 +70,15 @@ const DeployDatapacks = ({ openModal, handleCloseModal }) => {
                 <option value="all">All</option>
                 <option value="filtered">Checked</option>
                 <option value="filtered">Unchecked</option>
-
               </Select>
             </div>
+            <div className="flex-grow">
+              <span color="gray" size="sm" onClick={handleUncheckAll}
+                 className="inline text-sm p-2.5  text-blue-600 cursor-pointer hover:underline">
+              Uncheck all
+            </span>
+            </div>
           </div>
-
           <Table>
             <Table.Head>
               <Table.HeadCell>Name</Table.HeadCell>
@@ -69,7 +88,11 @@ const DeployDatapacks = ({ openModal, handleCloseModal }) => {
               {filteredDatapacks.map((datapack) => (
                 <Table.Row key={datapack.id}>
                   <Table.Cell>
-                    <Checkbox className="mr-2" />
+                    <Checkbox
+                      className="mr-2"
+                      checked={checked[datapack.id] || false}
+                      onChange={() => handleCheckboxChange(datapack.id)}
+                    />
                     {datapack.name}
                   </Table.Cell>
                   <Table.Cell>{datapack.description}</Table.Cell>
