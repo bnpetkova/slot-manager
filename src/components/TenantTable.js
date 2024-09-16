@@ -80,12 +80,14 @@ function TenantTable() {
   const [tenants, setTenants] = useState(initialTenants);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [creationLog, setCreationLog] = useState(null);
+  const [temporaryTenant, setTemporaryTenant] = useState(null);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   const handleAddTenant = (newTenant) => {
-    setTenants((prevTenants) => [...prevTenants, newTenant]);
+    setTemporaryTenant(newTenant);
+
 
     setCreationLog({
       tenantName: newTenant.name,
@@ -93,7 +95,10 @@ function TenantTable() {
     });
 
     setTimeout(() => {
+      setTenants((prevTenants) => [...prevTenants, newTenant]);
       setCreationLog(null);
+      setTemporaryTenant(null); 
+
     }, 10000); // 10 seconds
   };
 
@@ -126,8 +131,8 @@ function TenantTable() {
         </Button>
       </div>
 
-      <Table>
-        <Table.Head>
+      <Table className="border-collapse border border-slate-400" >
+        <Table.Head class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <Table.HeadCell>Tenant Name</Table.HeadCell>
           <Table.HeadCell>Flavor</Table.HeadCell>
           <Table.HeadCell>License Type</Table.HeadCell>
@@ -136,7 +141,7 @@ function TenantTable() {
         </Table.Head>
         <Table.Body>
           {tenants.map((tenant) => (
-            <Table.Row key={tenant.id}>
+            <Table.Row className="border-collapse border border-slate-400" key={tenant.id}>
               <Table.Cell>{tenant.name}</Table.Cell>
               <Table.Cell>{tenant.flavor}</Table.Cell>
               <Table.Cell>{tenant.licenseType}</Table.Cell>
@@ -149,7 +154,7 @@ function TenantTable() {
                   Datapacks
                 </Button>
                 <Button
-                  onClick={handleDelete}
+                  onClick={() => handleDelete(tenant.id)}
                   className="text-red-500 bg-transparent hover:text-red-700"
                 >
                   Delete
@@ -168,7 +173,7 @@ function TenantTable() {
       {creationLog && (
       <Card className="fixed top-0 start-0 z-50 flex justify-between w-full p-4 border-b border-gray-200">
           <h3 className="text-lg font-bold">
-            Creation log for {creationLog.tenantName}</h3>
+            Creation log for :{creationLog.tenantName}</h3>
           <p className="text-gray-500"> {creationLog.message}</p>
         </Card>
       )}
