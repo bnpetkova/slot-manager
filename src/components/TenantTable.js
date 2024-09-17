@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Table, Button, Card } from "flowbite-react";
 import CopyExistingTenant from "./CopyExistingTenant.js";
 import TenantInfoModal from "./TenantInfoModal.js";
+import LoadingAnimation from "./LoadingAnimation.js";
 
 const initialTenants = [
   {
@@ -81,13 +82,14 @@ function TenantTable() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [creationLog, setCreationLog] = useState(null);
   const [temporaryTenant, setTemporaryTenant] = useState(null);
+  const [isCreating, setIsCreating] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   const handleAddTenant = (newTenant) => {
     setTemporaryTenant(newTenant);
-
+    setIsCreating(true);
 
     setCreationLog({
       tenantName: newTenant.name,
@@ -97,9 +99,9 @@ function TenantTable() {
     setTimeout(() => {
       setTenants((prevTenants) => [...prevTenants, newTenant]);
       setCreationLog(null);
-      setTemporaryTenant(null); 
-
-    }, 10000); // 10 seconds
+      setTemporaryTenant(null);
+      setIsCreating(false);
+    }, 10000);
   };
 
   const handleDelete = (tenantId) => {
@@ -131,7 +133,7 @@ function TenantTable() {
         </Button>
       </div>
 
-      <Table className="border-collapse border border-slate-400" >
+      <Table className="border-collapse border border-slate-400">
         <Table.Head class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <Table.HeadCell>Tenant Name</Table.HeadCell>
           <Table.HeadCell>Flavor</Table.HeadCell>
@@ -141,7 +143,10 @@ function TenantTable() {
         </Table.Head>
         <Table.Body>
           {tenants.map((tenant) => (
-            <Table.Row className="border-collapse border border-slate-400" key={tenant.id}>
+            <Table.Row
+              className="border-collapse border border-slate-400"
+              key={tenant.id}
+            >
               <Table.Cell>{tenant.name}</Table.Cell>
               <Table.Cell>{tenant.flavor}</Table.Cell>
               <Table.Cell>{tenant.licenseType}</Table.Cell>
@@ -169,11 +174,14 @@ function TenantTable() {
         onClose={closeModal}
         onCreateTenant={handleAddTenant}
       />
-
+      {isCreating && temporaryTenant && (
+        <LoadingAnimation tenantName={temporaryTenant.name} />
+      )}
       {creationLog && (
-      <Card className=" absolute top-5 left-1/2 transform -translate-x-1/2 w-[500px] h-[200px] p-4 border-t-4 border-gray-300 bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
+        <Card className=" absolute top-5 left-1/2 transform -translate-x-1/2 w-[500px] h-[200px] p-4 border-t-4 border-gray-300 bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
           <h3 className="text-sm font-bold  text-gray-700  bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
-            Creation log for :{creationLog.tenantName}</h3>
+            Creation log for :{creationLog.tenantName}
+          </h3>
           <p className="text-gray-500 border-b"> {creationLog.message}</p>
         </Card>
       )}
