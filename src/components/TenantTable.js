@@ -171,10 +171,10 @@ function TenantTable() {
       />
 
       {creationLog && (
-      <Card className="fixed top-0 start-0 z-50 flex justify-between w-full p-4 border-b border-gray-200">
-          <h3 className="text-lg font-bold">
+      <Card className=" absolute top-5 left-1/2 transform -translate-x-1/2 w-[500px] h-[200px] p-4 border-t-4 border-gray-300 bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
+          <h3 className="text-sm font-bold  text-gray-700  bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
             Creation log for :{creationLog.tenantName}</h3>
-          <p className="text-gray-500"> {creationLog.message}</p>
+          <p className="text-gray-500 border-b"> {creationLog.message}</p>
         </Card>
       )}
     </div>
