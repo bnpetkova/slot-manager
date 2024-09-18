@@ -18,26 +18,7 @@ const LicenseManagementModal = ({ open, onClose }) => {
             <Label htmlFor="expirationDate">Expiration Date</Label>
             <TextInput id="expirationDate" placeholder="Enter expiration date" />
           </div>
-          <div>
-            <Label htmlFor="platinum">Platinum</Label>
-            <TextInput id="platinum" placeholder="Enter platinum value" />
-          </div>
-          <div>
-            <Label htmlFor="sdTenantId">SD Tenant ID</Label>
-            <TextInput id="sdTenantId" placeholder="Enter SD Tenant ID" />
-          </div>
-          <div>
-            <Label htmlFor="apiTier">API Tier</Label>
-            <TextInput id="apiTier" placeholder="Enter API Tier" />
-          </div>
-          <div>
-            <Label htmlFor="apiDiscountRate">API Discount Rate</Label>
-            <TextInput id="apiDiscountRate" placeholder="Enter API Discount Rate" />
-          </div>
-          <div>
-            <Label htmlFor="apiPriceFor500k">API Price for 500K</Label>
-            <TextInput id="apiPriceFor500k" placeholder="Enter API Price for 500K" />
-          </div>
+          {/* Additional fields here */}
         </div>
       </Modal.Body>
       <Modal.Footer>
