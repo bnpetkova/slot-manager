@@ -83,6 +83,8 @@ function TenantTable() {
   const [creationLog, setCreationLog] = useState(null);
   const [temporaryTenant, setTemporaryTenant] = useState(null);
   const [isCreating, setIsCreating] = useState(false);
+  const [showCreationLog, setShowCreationLog] = useState(false);
+  const [selectedTenantLog, setSelectedTenantLog] = useState(null);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -90,6 +92,7 @@ function TenantTable() {
   const handleAddTenant = (newTenant) => {
     setTemporaryTenant(newTenant);
     setIsCreating(true);
+    setShowCreationLog(false);
 
     setCreationLog({
       tenantName: newTenant.name,
@@ -101,6 +104,7 @@ function TenantTable() {
       setCreationLog(null);
       setTemporaryTenant(null);
       setIsCreating(false);
+      setShowCreationLog(true);
     }, 10000);
   };
 
@@ -113,6 +117,18 @@ function TenantTable() {
         setCreationLog(null);
       }
     }
+  };
+
+  const handleTenantClick = (tenantName) => {
+    console.log(`Tenant clicked: ${tenantName}`);
+    setSelectedTenantLog({
+      tenantName,
+      messages: [
+        `Licensing tenant: ${tenantName}`,
+        `Configuring document store for: ${tenantName}`,
+        `Activating tenant...`,
+      ],
+    });
   };
 
   return (
@@ -174,17 +190,40 @@ function TenantTable() {
         onClose={closeModal}
         onCreateTenant={handleAddTenant}
       />
-      {isCreating && temporaryTenant && (
-        <LoadingAnimation tenantName={temporaryTenant.name} />
-      )}
-      {creationLog && (
-        <Card className=" absolute top-5 left-1/2 transform -translate-x-1/2 w-[500px] h-[200px] p-4 border-t-4 border-gray-300 bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
-          <h3 className="text-sm font-bold  text-gray-700  bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
-            Creation log for :{creationLog.tenantName}
+        {selectedTenantLog && (
+        <Card className="absolute top-20 left-1/2 transform -translate-x-1/2 w-[500px] h-[200px] p-4 bg-white border border-gray-300 shadow-lg">
+          <h3 className="text-sm font-bold text-gray-700 bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+            Creation Log for: {selectedTenantLog.tenantName}
           </h3>
-          <p className="text-gray-500 border-b"> {creationLog.message}</p>
+          <ul className="text-gray-500 border-b">
+            {selectedTenantLog.messages.map((message, index) => (
+              <li key={index}>{message}</li>
+            ))}
+          </ul>
+          <Button
+            className="mt-4 text-white bg-blue-500 hover:bg-blue-700"
+            onClick={() => setSelectedTenantLog(null)} // Close the log
+          >
+            Close
+          </Button>
         </Card>
       )}
+       {creationLog && !showCreationLog && (
+        <Card className="absolute top-5 left-1/2 transform -translate-x-1/2 w-[500px] h-[200px] p-4 border-t-4 border-gray-300 bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
+          <h3 className="text-sm font-bold text-gray-700 bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+            Creation log for: {creationLog.tenantName}
+          </h3>
+          <p className="text-gray-500 border-b">{creationLog.message}</p>
+        </Card>
+      )}
+      {isCreating && temporaryTenant && (
+        <LoadingAnimation
+          tenantName={temporaryTenant.name}
+          onTenantClick={handleTenantClick} // Pass the click handler
+        />
+      )}
+   
+        
     </div>
   );
 }
