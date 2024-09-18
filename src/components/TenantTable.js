@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Table, Button, Card } from "flowbite-react";
 import CopyExistingTenant from "./CopyExistingTenant.js";
-import TenantInfoModal from "./TenantInfoModal.js";
 import LoadingAnimation from "./LoadingAnimation.js";
+import UnifiedModal from "./UnifiedModal.js";
 
 const initialTenants = [
   {
@@ -86,8 +86,8 @@ function TenantTable() {
   const [showCreationLog, setShowCreationLog] = useState(false);
   const [selectedTenantLog, setSelectedTenantLog] = useState(null);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const openUnifiedModal = () => setIsModalOpen(true);
+  const closeUnifiedModal = () => setIsModalOpen(false);
 
   const handleAddTenant = (newTenant) => {
     setTemporaryTenant(newTenant);
@@ -137,7 +137,7 @@ function TenantTable() {
         <div className="flex space-x-2">
           <Button
             className="text-white bg-blue-500 hover:bg-blue-700"
-            onClick={openModal}
+            onClick={openUnifiedModal}
           >
             Create New Tenant
           </Button>
@@ -185,30 +185,29 @@ function TenantTable() {
           ))}
         </Table.Body>
       </Table>
-      <TenantInfoModal
-        open={isModalOpen}
-        onClose={closeModal}
-        onCreateTenant={handleAddTenant}
-      />
-        {selectedTenantLog && (
+
+      <UnifiedModal open={isModalOpen} onClose={closeUnifiedModal} onCreateTenant={ handleAddTenant} />
+
+      {selectedTenantLog && (
         <Card className="absolute top-20 left-1/2 transform -translate-x-1/2 w-[500px] h-[200px] p-4 bg-white border border-gray-300 shadow-lg">
-          <h3 className="text-sm font-bold text-gray-700 bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+          <h3 className="font-bold text-lg text-gray-800">
             Creation Log for: {selectedTenantLog.tenantName}
           </h3>
-          <ul className="text-gray-500 border-b">
+          <ul className="text-gray-600 mt-2">
             {selectedTenantLog.messages.map((message, index) => (
               <li key={index}>{message}</li>
             ))}
           </ul>
           <Button
             className="mt-4 text-white bg-blue-500 hover:bg-blue-700"
-            onClick={() => setSelectedTenantLog(null)} // Close the log
+            onClick={() => setSelectedTenantLog(null)}
           >
             Close
           </Button>
         </Card>
       )}
-       {creationLog && !showCreationLog && (
+
+      {creationLog && !showCreationLog && (
         <Card className="absolute top-5 left-1/2 transform -translate-x-1/2 w-[500px] h-[200px] p-4 border-t-4 border-gray-300 bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
           <h3 className="text-sm font-bold text-gray-700 bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
             Creation log for: {creationLog.tenantName}
@@ -216,16 +215,17 @@ function TenantTable() {
           <p className="text-gray-500 border-b">{creationLog.message}</p>
         </Card>
       )}
+
       {isCreating && temporaryTenant && (
         <LoadingAnimation
           tenantName={temporaryTenant.name}
-          onTenantClick={handleTenantClick} // Pass the click handler
+          onTenantClick={handleTenantClick}
         />
       )}
-   
-        
     </div>
   );
 }
+
+
 
 export default TenantTable;

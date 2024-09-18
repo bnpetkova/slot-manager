@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  Modal,
-  TextInput,
-  Label,
-  Select,
-  Table,
-  Button,
-  Checkbox,
-} from "flowbite-react";
+import { Modal, TextInput, Label, Select, Table, Button, Checkbox } from "flowbite-react";
 
 const datapacks = [
   { id: 1, name: "Datapack A", description: "Description for Datapack A" },
@@ -18,7 +10,7 @@ const datapacks = [
 const DeployDatapacks = ({ openModal, handleCloseModal }) => {
   const [filterText, setFilterText] = useState("");
   const [filterAll, setFilterAll] = useState("all");
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState({});
 
   const handleFilterTextChange = (e) => setFilterText(e.target.value);
   const handleFilterAllChange = (e) => setFilterAll(e.target.value);
@@ -37,6 +29,7 @@ const DeployDatapacks = ({ openModal, handleCloseModal }) => {
       [id]: !prevChecked[id],
     }));
   };
+
   const handleUncheckAll = () => {
     const uncheckedItems = {};
     datapacks.forEach((datapack) => {
@@ -68,15 +61,19 @@ const DeployDatapacks = ({ openModal, handleCloseModal }) => {
                 onChange={handleFilterAllChange}
               >
                 <option value="all">All</option>
-                <option value="filtered">Checked</option>
-                <option value="filtered">Unchecked</option>
+                <option value="checked">Checked</option>
+                <option value="unchecked">Unchecked</option>
               </Select>
             </div>
             <div className="flex-grow">
-              <span color="gray" size="sm" onClick={handleUncheckAll}
-                 className="inline text-sm p-2.5  text-blue-600 cursor-pointer hover:underline">
-              Uncheck all
-            </span>
+              <span
+                color="gray"
+                size="sm"
+                onClick={handleUncheckAll}
+                className="inline text-sm p-2.5 text-blue-600 cursor-pointer hover:underline"
+              >
+                Uncheck all
+              </span>
             </div>
           </div>
           <Table>
@@ -103,9 +100,7 @@ const DeployDatapacks = ({ openModal, handleCloseModal }) => {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button color="gray" onClick={handleCloseModal}>
-          Close
-        </Button>
+        <Button color="gray" onClick={handleCloseModal}>Close</Button>
       </Modal.Footer>
     </Modal>
   );
