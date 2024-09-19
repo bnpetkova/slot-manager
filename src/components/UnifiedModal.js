@@ -7,14 +7,27 @@ import DocumentStoreForm from "./DocumentStore";
 
 const UnifiedModal = ({ open, onClose }) => {
   const [activeTab, setActiveTab] = useState("TenantInfo");
+  const [licenseModalOpen, setLicenseModalOpen] = useState(false);
+  const [datapacksModalOpen, setDatapacksModalOpen] = useState(false);
+
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+    if (tab === "Licensing") {
+      setLicenseModalOpen(true);
+      setDatapacksModalOpen(false); 
+    } else if (tab === "Datapacks") {
+      setDatapacksModalOpen(true); 
+      setLicenseModalOpen(false); 
+    } else {
+      setLicenseModalOpen(false);
+      setDatapacksModalOpen(false);
+    }
   };
+
 
   return (
     <Modal show={open} onClose={onClose}>
-      <Modal.Header>Create New</Modal.Header>
       <Modal.Body>
         <div className="flex space-x-4 mb-4 border-b pb-2">
           <Button
@@ -48,10 +61,11 @@ const UnifiedModal = ({ open, onClose }) => {
           <TenantInfoForm onClose={onClose} />
         )}
         {activeTab === "Licensing" && (
-          <LicenseManagementModal onClose={onClose} />
+               <LicenseManagementModal open={licenseModalOpen} onClose={() => setLicenseModalOpen(false)} />
+
         )}
-        {activeTab === "Datapacks" && (
-          <DeployDatapacks onClose={onClose} />
+     {activeTab === "Datapacks" && (
+          <DeployDatapacks openModal={datapacksModalOpen} handleCloseModal={() => setDatapacksModalOpen(false)} />
         )}
         {activeTab === "DocumentStore" && (
           <DocumentStoreForm onClose={onClose} />
