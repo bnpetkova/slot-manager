@@ -93,10 +93,14 @@ function TenantTable() {
     setTemporaryTenant(newTenant);
     setIsCreating(true);
     setShowCreationLog(false);
+    if (!newTenant.tenantName) {
+      console.error("Tenant name is missing.");
+      return;
+    }
 
     setCreationLog({
-      tenantName: newTenant.name,
-      message: `Tenant creation has started for ${newTenant.name}. Updates will appear here.`,
+      tenantName: newTenant.tenantName,
+      message: `Tenant creation has started for ${newTenant.tenantName}. Updates will appear here.`,
     });
 
     setTimeout(() => {
@@ -150,7 +154,7 @@ function TenantTable() {
       </div>
 
       <Table className="border-collapse border border-slate-400">
-        <Table.Head class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <Table.Head className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <Table.HeadCell>Tenant Name</Table.HeadCell>
           <Table.HeadCell>Flavor</Table.HeadCell>
           <Table.HeadCell>License Type</Table.HeadCell>
@@ -186,7 +190,11 @@ function TenantTable() {
         </Table.Body>
       </Table>
 
-      <UnifiedModal open={isModalOpen} onClose={closeUnifiedModal} onCreateTenant={ handleAddTenant} />
+      <UnifiedModal
+        open={isModalOpen}
+        onClose={closeUnifiedModal}
+        onCreateTenant={handleAddTenant}
+      />
 
       {selectedTenantLog && (
         <Card className="absolute top-20 left-1/2 transform -translate-x-1/2 w-[500px] h-[200px] p-4 bg-white border border-gray-300 shadow-lg">
@@ -218,14 +226,12 @@ function TenantTable() {
 
       {isCreating && temporaryTenant && (
         <LoadingAnimation
-          tenantName={temporaryTenant.name}
+          tenantName={temporaryTenant.tenantName}
           onTenantClick={handleTenantClick}
         />
       )}
     </div>
   );
 }
-
-
 
 export default TenantTable;

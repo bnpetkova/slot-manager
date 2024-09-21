@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-const LoadingAnimation = ({ tenantName, onTenantClick}) => {
+const LoadingAnimation = ({ tenantName, onTenantClick, key }) => {
   return (
-    <div className="flex items-center space-x-4">
-    <span
+    <div key={key} className="flex items-center space-x-4">
+      <span
         className="text-gray-700 font-semibold cursor-pointer hover:underline"
         onClick={() => onTenantClick(tenantName)}
       >
@@ -11,7 +11,7 @@ const LoadingAnimation = ({ tenantName, onTenantClick}) => {
       </span>
       <div className="loader"></div>
 
-      <style jsx>{`
+      <style>{`
         .loader {
           width: 100%;
           height: 20px;

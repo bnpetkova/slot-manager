@@ -4,10 +4,13 @@ import { Label, TextInput, Checkbox, Button } from "flowbite-react";
 import { useForm } from "react-hook-form";
 
 const TenantInfoForm = ({ onSubmit, onClose }) => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit: reactHookFormHandleSubmit, formState: { errors } } = useForm();
+  const onFormSubmit = (data) => {
+    onSubmit(data); 
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={reactHookFormHandleSubmit(onFormSubmit)} className="space-y-4">
       <div>
         <Label htmlFor="tenantName">Tenant Name</Label>
         <TextInput
