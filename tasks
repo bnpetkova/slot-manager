@@ -1,0 +1,32 @@
+1. Set Up Project Structure
+    - install Flowbite & Tailwind          //done
+    - create folders: Components, Pages, Styles, Services, Tests           //done
+    - create components for different actions : Tenant Table, Tenant Info Modal, Licence Management,Licence Management Modal, Create New, Copy Excisting, Deploy Datapacks (modal),  Delete Tenant (modal)         //done
+
+2. Build the tenant table
+    - Use Flowbite table components for styling.         //done
+    - Add placeholder/mock data for tenants.
+    -Implement action buttons for Logs, Datapacks, and Delete in each row.         // done
+    - Add the Create New Tenant, Copy Existing Tenant, and Flavors buttons
+      above the table. //done
+
+3. Create Modals for Tenant Actions
+   - Create New Tenant : Tenant Name, Client Domain, Flavor, Time Zone, Admin User, Admin
+     Password, Use Snapshot, Overwrite Existing.           //done
+   - Copy Existing Tenant : Copy Tenant, New Tenant Name, Client Domain, Overwrite Existing.        //done
+   - License Management : License Type, Expiration Date, and editable fields for different license
+     categories.          //done
+   - Deploy Datapacks: Select datapacks, filtering by name/description.       //partially done
+   - Delete Tenant : Confirmation of tenant and database names.
+
+4. Implement Field Validation
+
+5. Implement Button Actions
+
+6. Write Unit Tests
+   - Set up the testing environment (Jest and React Testing Library).
+   - Write tests for the TenantTable component to ensure it renders rows and
+     buttons correctly.
+   - Write tests for the modals to ensure they open with correct fields and
+     validate inputs.
+   - Write tests for form submissions.
