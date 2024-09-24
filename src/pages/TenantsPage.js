@@ -5,9 +5,16 @@ import LoadingAnimation from "../components/LoadingAnimation.js";
 import UnifiedModal from "../components/UnifiedModal.js";
 import TenantTable from "../components/TenantTable.js";
 import StartingTenants from "../utils/StartingTenants.js";
+import DatapacksModal from "../components/DatapacksModal.js";
+import LicenseManagementModal from "../components/LicenseManagementModal.js";
 
 const initialTenants = StartingTenants;
 
+const datapacks = [
+  { id: 1, name: "Datapack A", description: "Description for Datapack A" },
+  { id: 2, name: "Datapack B", description: "Description for Datapack B" },
+  { id: 3, name: "Datapack C", description: "Description for Datapack C" },
+];
 function TenantsPage() {
   const [tenants, setTenants] = useState(initialTenants);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,9 +23,15 @@ function TenantsPage() {
   const [isCreating, setIsCreating] = useState(false);
   const [showCreationLog, setShowCreationLog] = useState(false);
   const [selectedTenantLog, setSelectedTenantLog] = useState(null);
+  const [isDatapacksModalOpen, setIsDatapacksModalOpen] = useState(false);
+  const [selectedTenantForDatapacks, setSelectedTenantForDatapacks] =
+    useState(null);
+  
+    const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
 
   const openUnifiedModal = () => setIsModalOpen(true);
   const closeUnifiedModal = () => setIsModalOpen(false);
+
 
   const handleAddTenant = (newTenant) => {
     setTemporaryTenant(newTenant);
@@ -72,7 +85,10 @@ function TenantsPage() {
 
   const handleDatapackClick = (tenantName) => {
     console.log(`Datapacks clicked for: ${tenantName}`);
+    setSelectedTenantForDatapacks(tenantName);
+    setIsDatapacksModalOpen(true);
   };
+
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
@@ -98,11 +114,22 @@ function TenantsPage() {
         onDatapackClick={handleDatapackClick}
       />
 
-
       <UnifiedModal
         open={isModalOpen}
+        datapacks={datapacks}
         onClose={closeUnifiedModal}
         onCreateTenant={handleAddTenant}
+      />
+
+      <DatapacksModal
+        open={isDatapacksModalOpen}
+        onClose={() => setIsDatapacksModalOpen(false)}
+        tenantName={selectedTenantForDatapacks}
+        datapacks={datapacks}
+      />
+        <LicenseManagementModal
+        open={isLicenseModalOpen}
+        onClose={() => setIsLicenseModalOpen(false)}
       />
 
       {selectedTenantLog && (
