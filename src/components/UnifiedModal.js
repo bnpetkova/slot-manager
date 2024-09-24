@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { Button, Modal } from "flowbite-react";
 import TenantInfoForm from "./TenantInfoForm";
 import LicenseManagementModal from "./LicenseManagementModal";
-import DeployDatapacks from "./DeployDatapacksModal";
 import DocumentStoreForm from "./DocumentStore";
-
+import DatapacksModal from "./DatapacksModal";
 const UnifiedModal = ({ open, onClose, onCreateTenant }) => {
 
   // [ "TenantInfo", "Licensing", "Datapacks", "DocumentStore" ]
@@ -88,7 +87,7 @@ const UnifiedModal = ({ open, onClose, onCreateTenant }) => {
           />
         )}
         {activeTab === "Datapacks" && (
-          <DeployDatapacks
+          <DatapacksModal
             openModal={datapacksModalOpen}
             handleCloseModal={() => setDatapacksModalOpen(false)}
           />
