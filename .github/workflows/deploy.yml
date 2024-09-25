@@ -4,7 +4,7 @@ name: Deploy static app to GitHub Pages
 on:
   push:
     branches:
-      - main # or the branch you want to deploy from
+      - master
 
 jobs:
   build:
