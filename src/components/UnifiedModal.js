@@ -1,18 +1,12 @@
 import React, { useState } from "react";
 import { Button, Modal } from "flowbite-react";
 import TenantInfoForm from "./TenantInfoForm";
-import LicenseManagementModal from "./LicenseManagementModal";
 import DocumentStoreForm from "./DocumentStore";
-import DatapacksModal from "./DatapacksModal";
-const UnifiedModal = ({ open, onClose, onCreateTenant }) => {
+import DatapacksPanel from "./DatapacksPanel";
+import LicenseManagementPanel from "./LicenseManagementPanel";
 
-  // [ "TenantInfo", "Licensing", "Datapacks", "DocumentStore" ]
-
+const UnifiedModal = ({ open, onClose, onCreateTenant, datapacks }) => {
   const [activeTab, setActiveTab] = useState("TenantInfo");
-  const [licenseModalOpen, setLicenseModalOpen] = useState(false);
-  const [datapacksModalOpen, setDatapacksModalOpen] = useState(false);
-
-  // const [tenantData, setTenantData] = useState({});
 
   const handleSubmit = (tenantData) => {
     onCreateTenant(tenantData);
@@ -21,16 +15,6 @@ const UnifiedModal = ({ open, onClose, onCreateTenant }) => {
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
-    if (tab === "Licensing") {
-      setLicenseModalOpen(true);
-      setDatapacksModalOpen(false);
-    } else if (tab === "Datapacks") {
-      setDatapacksModalOpen(true);
-      setLicenseModalOpen(false);
-    } else {
-      setLicenseModalOpen(false);
-      setDatapacksModalOpen(false);
-    }
   };
 
   return (
@@ -74,24 +58,13 @@ const UnifiedModal = ({ open, onClose, onCreateTenant }) => {
         {activeTab === "TenantInfo" && (
           <TenantInfoForm
             onSubmit={(tenantData) => {
-              // setTenantData(tenantData);
               handleSubmit(tenantData);
             }}
             onClose={onClose}
           />
         )}
-        {activeTab === "Licensing" && (
-          <LicenseManagementModal
-            open={licenseModalOpen}
-            onClose={() => setLicenseModalOpen(false)}
-          />
-        )}
-        {activeTab === "Datapacks" && (
-          <DatapacksModal
-            openModal={datapacksModalOpen}
-            handleCloseModal={() => setDatapacksModalOpen(false)}
-          />
-        )}
+        {activeTab === "Licensing" && <LicenseManagementPanel />}
+        {activeTab === "Datapacks" && <DatapacksPanel datapacks={datapacks} />}
         {activeTab === "DocumentStore" && (
           <DocumentStoreForm onClose={onClose} />
         )}

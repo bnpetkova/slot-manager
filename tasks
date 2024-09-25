@@ -30,3 +30,4 @@
    - Write tests for the modals to ensure they open with correct fields and
      validate inputs.
    - Write tests for form submissions.
+7. Divide The Licence Management Modal into 2 parts : Licence Modal and Licence Panel
