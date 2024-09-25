@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { TextInput, Label, Select, Table, Checkbox } from "flowbite-react";
 
-
-
 const DatapacksPanel = ({ datapacks }) => {
   const [filterText, setFilterText] = useState("");
   const [filterAll, setFilterAll] = useState("all");
@@ -15,12 +13,19 @@ const DatapacksPanel = ({ datapacks }) => {
     const matchText =
       datapack.name.toLowerCase().includes(filterText.toLowerCase()) ||
       datapack.description.toLowerCase().includes(filterText.toLowerCase());
-    const matchAll = filterAll === "all" || matchText;
-    const matchChecked =
-      filterAll === "checked" ? checked[datapack.id] : true;
-    const matchUnchecked =
-      filterAll === "unchecked" ? !checked[datapack.id] : true;
-    return matchAll && matchChecked && matchUnchecked;
+
+    if (!matchText) {
+      return false;
+    }
+
+    if (filterAll === "all") {
+      return true;
+    }
+
+    return (
+      (filterAll === "checked" && checked[datapack.id]) ||
+      (filterAll === "unchecked" && !checked[datapack.id])
+    );
   });
 
   const handleCheckboxChange = (id) => {
