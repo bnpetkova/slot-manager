@@ -15,6 +15,7 @@ const datapacks = [
   { id: 2, name: "Datapack B", description: "Description for Datapack B" },
   { id: 3, name: "Datapack C", description: "Description for Datapack C" },
 ];
+
 function TenantsPage() {
   const [tenants, setTenants] = useState(initialTenants);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,6 +29,8 @@ function TenantsPage() {
     useState(null);
 
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
+
+  const [isDarkMode, setIsDarkMode] = useState(false); 
 
   const openUnifiedModal = () => setIsModalOpen(true);
   const closeUnifiedModal = () => setIsModalOpen(false);
@@ -89,83 +92,98 @@ function TenantsPage() {
     setIsDatapacksModalOpen(true);
   };
 
+  const toggleDarkMode = () => setIsDarkMode(!isDarkMode); 
+
   return (
-    <div>
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex space-x-2">
-          <Button
-            className="text-white bg-blue-500 hover:bg-blue-700"
-            onClick={openUnifiedModal}
-          >
-            Create New Tenant
+    <div className={isDarkMode ? "dark" : ""}>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex space-x-2">
+            <Button
+              className="text-white bg-blue-500 hover:bg-blue-700"
+              onClick={openUnifiedModal}
+            >
+              Create New Tenant
+            </Button>
+            <CopyExistingTenant />
+          </div>
+
+          <h2 className="text-lg font-semibold mx-4 text-gray-900 dark:text-gray-100">
+            Tenants
+          </h2>
+
+          <Button className="text-white bg-blue-500 hover:bg-blue-700">
+            Flavors
           </Button>
-          <CopyExistingTenant />
+
+          <Button
+            className="ml-4 text-gray-900 dark:text-gray-100"
+            onClick={toggleDarkMode}
+          >
+            {isDarkMode ? "Light Mode" : "Dark Mode"}
+          </Button>
         </div>
-        <h2 className="text-lg font-semibold mx-4">Tenants</h2>
-        <Button className="text-white bg-blue-500 hover:bg-blue-700">
-          Flavors
-        </Button>
-      </div>
 
-      <TenantTable
-        tenants={tenants}
-        onDelete={handleDelete}
-        onLogClick={handleLogClick}
-        onDatapackClick={handleDatapackClick}
-      />
-
-      <UnifiedModal
-        open={isModalOpen}
-        datapacks={datapacks}
-        onClose={closeUnifiedModal}
-        onCreateTenant={handleAddTenant}
-      />
-
-      <DatapacksModal
-        open={isDatapacksModalOpen}
-        onClose={() => setIsDatapacksModalOpen(false)}
-        tenantName={selectedTenantForDatapacks}
-        datapacks={datapacks}
-      />
-      <LicenseManagementModal
-        open={isLicenseModalOpen}
-        onClose={() => setIsLicenseModalOpen(false)}
-      />
-
-      {selectedTenantLog && (
-        <Card className="absolute top-20 left-1/2 transform -translate-x-1/2 w-[500px] h-[200px] p-4 bg-white border border-gray-300 shadow-lg">
-          <h3 className="font-bold text-lg text-gray-800">
-            Creation Log for: {selectedTenantLog.tenantName}
-          </h3>
-          <ul className="text-gray-600 mt-2">
-            {selectedTenantLog.messages.map((message, index) => (
-              <li key={index}>{message}</li>
-            ))}
-          </ul>
-          <Button
-            className="mt-4 text-white bg-blue-500 hover:bg-blue-700"
-            onClick={() => setSelectedTenantLog(null)}
-          >
-            Close
-          </Button>
-        </Card>
-      )}
-
-      {creationLog && !showCreationLog && (
-        <Card className="absolute top-5 left-1/2 transform -translate-x-1/2 w-[500px] h-[200px] p-4 border-t-4 border-gray-300 bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
-          <h3 className="text-sm font-bold text-gray-700 bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
-            Creation log for: {creationLog.tenantName}
-          </h3>
-          <p className="text-gray-500 border-b">{creationLog.message}</p>
-        </Card>
-      )}
-
-      {isCreating && temporaryTenant && (
-        <LoadingAnimation
-          tenantName={temporaryTenant.tenantName}
-          onTenantClick={handleTenantClick}
+        <TenantTable
+          tenants={tenants}
+          onDelete={handleDelete}
+          onLogClick={handleLogClick}
+          onDatapackClick={handleDatapackClick}
         />
-      )}
+
+        <UnifiedModal
+          open={isModalOpen}
+          datapacks={datapacks}
+          onClose={closeUnifiedModal}
+          onCreateTenant={handleAddTenant}
+        />
+
+        <DatapacksModal
+          open={isDatapacksModalOpen}
+          onClose={() => setIsDatapacksModalOpen(false)}
+          tenantName={selectedTenantForDatapacks}
+          datapacks={datapacks}
+        />
+        <LicenseManagementModal
+          open={isLicenseModalOpen}
+          onClose={() => setIsLicenseModalOpen(false)}
+        />
+
+        {selectedTenantLog && (
+          <Card className="absolute top-20 left-1/2 transform -translate-x-1/2 w-[500px] h-[200px] p-4 bg-white border border-gray-300 shadow-lg">
+            <h3 className="font-bold text-lg text-gray-800">
+              Creation Log for: {selectedTenantLog.tenantName}
+            </h3>
+            <ul className="text-gray-600 mt-2">
+              {selectedTenantLog.messages.map((message, index) => (
+                <li key={index}>{message}</li>
+              ))}
+            </ul>
+            <Button
+              className="mt-4 text-white bg-blue-500 hover:bg-blue-700"
+              onClick={() => setSelectedTenantLog(null)}
+            >
+              Close
+            </Button>
+          </Card>
+        )}
+
+        {creationLog && !showCreationLog && (
+          <Card className="absolute top-5 left-1/2 transform -translate-x-1/2 w-[500px] h-[200px] p-4 border-t-4 border-gray-300 bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
+            <h3 className="text-sm font-bold text-gray-700 bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+              Creation log for: {creationLog.tenantName}
+            </h3>
+            <p className="text-gray-500 border-b">{creationLog.message}</p>
+          </Card>
+        )}
+
+        {isCreating && temporaryTenant && (
+          <LoadingAnimation
+            tenantName={temporaryTenant.tenantName}
+            onTenantClick={handleTenantClick}
+          />
+        )}
+      </div>
     </div>
   );
 }
