@@ -11,6 +11,7 @@ import LicenseManagementModal from "./LicenseManagementModal";
 function TenantTable({ tenants, onDelete, onLogClick, onDatapackClick }) {
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const [selectedTenant, setSelectedTenant] = useState(null);
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
   const handleExpirationClick = (tenant) => {
     setSelectedTenant(tenant);
@@ -27,19 +28,71 @@ function TenantTable({ tenants, onDelete, onLogClick, onDatapackClick }) {
     setIsLicenseModalOpen(false);
   };
 
+  const handleSort = (key) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const sortedTenants = [...tenants].sort((a, b) => {
+    if (sortConfig.key) {
+      const order = sortConfig.direction === "asc" ? 1 : -1;
+      if (a[sortConfig.key] < b[sortConfig.key]) return -order;
+      if (a[sortConfig.key] > b[sortConfig.key]) return order;
+    }
+    return 0;
+  });
+
   return (
     <>
       <Table className="border-collapse border border-slate-400">
         <Table.Head className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <Table.HeadCell>Status</Table.HeadCell>
-          <Table.HeadCell>Tenant Name</Table.HeadCell>
-          <Table.HeadCell>Flavor</Table.HeadCell>
-          <Table.HeadCell>License Type</Table.HeadCell>
-          <Table.HeadCell>Expiration Date</Table.HeadCell>
+          <Table.HeadCell
+            onClick={() => handleSort("status")}
+            className="cursor-pointer"
+          >
+            Status{" "}
+            {sortConfig.key === "status" &&
+              (sortConfig.direction === "asc" ? "↑" : "↓")}
+          </Table.HeadCell>
+          <Table.HeadCell
+            onClick={() => handleSort("name")}
+            className="cursor-pointer"
+          >
+            Tenant Name{" "}
+            {sortConfig.key === "name" &&
+              (sortConfig.direction === "asc" ? "↑" : "↓")}
+          </Table.HeadCell>
+          <Table.HeadCell
+            onClick={() => handleSort("flavor")}
+            className="cursor-pointer"
+          >
+            Flavor{" "}
+            {sortConfig.key === "flavor" &&
+              (sortConfig.direction === "asc" ? "↑" : "↓")}
+          </Table.HeadCell>
+          <Table.HeadCell
+            onClick={() => handleSort("licenseType")}
+            className="cursor-pointer"
+          >
+            License Type{" "}
+            {sortConfig.key === "licenseType" &&
+              (sortConfig.direction === "asc" ? "↑" : "↓")}
+          </Table.HeadCell>
+          <Table.HeadCell
+            onClick={() => handleSort("expirationDate")}
+            className="cursor-pointer"
+          >
+            Expiration Date{" "}
+            {sortConfig.key === "expirationDate" &&
+              (sortConfig.direction === "asc" ? "↑" : "↓")}
+          </Table.HeadCell>
           <Table.HeadCell>Actions</Table.HeadCell>
         </Table.Head>
         <Table.Body>
-          {tenants.map((tenant) => (
+          {sortedTenants.map((tenant) => (
             <Table.Row
               key={tenant.id}
               className="border-collapse border border-slate-400"
@@ -117,5 +170,7 @@ function TenantTable({ tenants, onDelete, onLogClick, onDatapackClick }) {
     </>
   );
 }
+
+
 
 export default TenantTable;
