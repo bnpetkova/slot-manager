@@ -26,14 +26,14 @@ function TenantsPage() {
   const [isDatapacksModalOpen, setIsDatapacksModalOpen] = useState(false);
   const [selectedTenantForDatapacks, setSelectedTenantForDatapacks] =
     useState(null);
-  
-    const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
+
+  const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
 
   const openUnifiedModal = () => setIsModalOpen(true);
   const closeUnifiedModal = () => setIsModalOpen(false);
 
-
   const handleAddTenant = (newTenant) => {
+    debugger;
     setTemporaryTenant(newTenant);
     setIsCreating(true);
     setShowCreationLog(false);
@@ -127,7 +127,7 @@ function TenantsPage() {
         tenantName={selectedTenantForDatapacks}
         datapacks={datapacks}
       />
-        <LicenseManagementModal
+      <LicenseManagementModal
         open={isLicenseModalOpen}
         onClose={() => setIsLicenseModalOpen(false)}
       />

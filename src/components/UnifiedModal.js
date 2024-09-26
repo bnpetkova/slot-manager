@@ -18,7 +18,7 @@ const UnifiedModal = ({ open, onClose, onCreateTenant, datapacks }) => {
   };
 
   return (
-    <Modal show={open} onClose={onClose}>
+    <Modal show={open} onClose={onClose} className="max-h-screen overflow-y-auto">
       <Modal.Body>
         <div className="flex space-x-4 mb-4 border-b pb-2">
           <Button
