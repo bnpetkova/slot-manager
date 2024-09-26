@@ -89,9 +89,7 @@ const TenantInfoForm = ({ onSubmit, onClose }) => {
         <Button color="gray" type="submit">
           Create
         </Button>
-        <Button color="gray" onClick={onClose}>
-          Cancel
-        </Button>
+        
       </div>
     </form>
   );
