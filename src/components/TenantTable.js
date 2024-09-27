@@ -171,6 +171,4 @@ function TenantTable({ tenants, onDelete, onLogClick, onDatapackClick }) {
   );
 }
 
-
-
 export default TenantTable;

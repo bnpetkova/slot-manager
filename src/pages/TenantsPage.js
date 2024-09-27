@@ -7,6 +7,9 @@ import TenantTable from "../components/TenantTable.js";
 import StartingTenants from "../utils/StartingTenants.js";
 import DatapacksModal from "../components/DatapacksModal.js";
 import LicenseManagementModal from "../components/LicenseManagementModal.js";
+import { faMoon } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
 const initialTenants = StartingTenants;
 
@@ -100,7 +103,7 @@ function TenantsPage() {
         <div className="flex items-center justify-between mb-4">
           <div className="flex space-x-2">
             <Button
-              className="text-white bg-blue-500 hover:bg-blue-700"
+              className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
               onClick={openUnifiedModal}
             >
               Create New Tenant
@@ -108,20 +111,26 @@ function TenantsPage() {
             <CopyExistingTenant />
           </div>
 
-          <h2 className="text-lg font-semibold mx-4 text-gray-900 dark:text-gray-100">
+          <h2 className="text-3xl font-bold dark:text-white">
             Tenants
           </h2>
 
-          <Button className="text-white bg-blue-500 hover:bg-blue-700">
+          <Button className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
             Flavors
           </Button>
 
-          <Button
-            className="ml-4 text-gray-900 dark:text-gray-100"
-            onClick={toggleDarkMode}
-          >
-            {isDarkMode ? "Light Mode" : "Dark Mode"}
-          </Button>
+          <div className="relative inline-block">
+            <button
+              className="ml-4 text-gray-900 dark:text-gray-100 focus:outline-none"
+              onClick={toggleDarkMode}
+              aria-label="Toggle dark mode"
+            >
+              <FontAwesomeIcon icon={faMoon} className="text-xl" />
+            </button>
+            <span className="absolute left-1/2 transform -translate-x-1/2 -translate-y-full mb-2 w-auto text-center text-sm bg-gray-700 text-white rounded-md py-1 opacity-0 transition-opacity duration-200 hover:opacity-100">
+              Toggle dark mode
+            </span>
+          </div>
         </div>
 
         <TenantTable

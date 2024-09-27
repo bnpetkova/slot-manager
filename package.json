@@ -4,6 +4,8 @@
   "private": true,
   "homepage": "https://bnpetkova.github.io/slot-manager/",
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -19,7 +21,6 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "postdeploy": "echo 'Deployment complete!'",
-
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
