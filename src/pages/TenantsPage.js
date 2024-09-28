@@ -38,7 +38,6 @@ function TenantsPage() {
   const closeUnifiedModal = () => setIsModalOpen(false);
 
   const handleAddTenant = (newTenant) => {
-    debugger;
     setTemporaryTenant(newTenant);
     setIsCreating(true);
     setShowCreationLog(false);
@@ -73,7 +72,6 @@ function TenantsPage() {
   };
 
   const handleTenantClick = (tenantName) => {
-    console.log(`Tenant clicked: ${tenantName}`);
     setSelectedTenantLog({
       tenantName,
       messages: [
@@ -89,7 +87,6 @@ function TenantsPage() {
   };
 
   const handleDatapackClick = (tenantName) => {
-    console.log(`Datapacks clicked for: ${tenantName}`);
     setSelectedTenantForDatapacks(tenantName);
     setIsDatapacksModalOpen(true);
   };
@@ -98,9 +95,9 @@ function TenantsPage() {
 
   return (
     <div className={isDarkMode ? "dark" : ""}>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-        <div className="flex items-center justify-between mb-4 ">
-          <div className="flex space-x-2 ">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 px-5 py-6">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex space-x-2">
             <Button
               className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 mt-4 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
               onClick={openUnifiedModal}
@@ -109,17 +106,13 @@ function TenantsPage() {
             </Button>
             <CopyExistingTenant />
           </div>
-         <div className="">
-        <h2 className="flex-grow text-center text-3xl font-bold dark:text-white mt-4 ">
-          Tenants
+          <h2 className="flex-grow text-center text-3xl font-bold dark:text-white mt-4">
+            Tenants
           </h2>
-          </div>
-
           <div className="flex items-center space-x-2">
             <Button className="ml-4 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 mt-4 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
               Flavors
             </Button>
-
             <button
               className="ml-4 text-gray-900 dark:text-gray-100 focus:outline-none"
               onClick={toggleDarkMode}

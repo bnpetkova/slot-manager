@@ -47,11 +47,11 @@ function TenantTable({ tenants, onDelete, onLogClick, onDatapackClick }) {
 
   return (
     <>
-      <Table className="border-collapse border border-slate-400">
-        <Table.Head className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <Table className="min-w-full border-collapse border border-gray-300 rounded-lg shadow-md">
+        <Table.Head className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-800 dark:text-gray-200">
           <Table.HeadCell
             onClick={() => handleSort("status")}
-            className="cursor-pointer"
+            className="cursor-pointer px-4 py-2 border-b border-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
           >
             Status{" "}
             {sortConfig.key === "status" &&
@@ -59,7 +59,7 @@ function TenantTable({ tenants, onDelete, onLogClick, onDatapackClick }) {
           </Table.HeadCell>
           <Table.HeadCell
             onClick={() => handleSort("name")}
-            className="cursor-pointer"
+            className="cursor-pointer px-4 py-2 border-b border-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
           >
             Tenant Name{" "}
             {sortConfig.key === "name" &&
@@ -67,7 +67,7 @@ function TenantTable({ tenants, onDelete, onLogClick, onDatapackClick }) {
           </Table.HeadCell>
           <Table.HeadCell
             onClick={() => handleSort("flavor")}
-            className="cursor-pointer"
+            className="cursor-pointer px-4 py-2 border-b border-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
           >
             Flavor{" "}
             {sortConfig.key === "flavor" &&
@@ -75,7 +75,7 @@ function TenantTable({ tenants, onDelete, onLogClick, onDatapackClick }) {
           </Table.HeadCell>
           <Table.HeadCell
             onClick={() => handleSort("licenseType")}
-            className="cursor-pointer"
+            className="cursor-pointer px-4 py-2 border-b border-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
           >
             License Type{" "}
             {sortConfig.key === "licenseType" &&
@@ -83,7 +83,7 @@ function TenantTable({ tenants, onDelete, onLogClick, onDatapackClick }) {
           </Table.HeadCell>
           <Table.HeadCell
             onClick={() => handleSort("expirationDate")}
-            className="cursor-pointer"
+            className="cursor-pointer px-4 py-2 border-b border-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
           >
             Expiration Date{" "}
             {sortConfig.key === "expirationDate" &&
@@ -95,9 +95,9 @@ function TenantTable({ tenants, onDelete, onLogClick, onDatapackClick }) {
           {sortedTenants.map((tenant) => (
             <Table.Row
               key={tenant.id}
-              className="border-collapse border border-slate-400"
+              className="border-collapse border border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
             >
-              <Table.Cell>
+              <Table.Cell className="px-4 py-2 border-b border-gray-300">
                 {tenant.status === "inprogress" && (
                   <LoadingAnimation
                     tenantName={tenant.name}
@@ -123,10 +123,10 @@ function TenantTable({ tenants, onDelete, onLogClick, onDatapackClick }) {
                   />
                 )}
               </Table.Cell>
-              <Table.Cell>{tenant.name}</Table.Cell>
-              <Table.Cell>{tenant.flavor}</Table.Cell>
-              <Table.Cell>{tenant.licenseType}</Table.Cell>
-              <Table.Cell>
+              <Table.Cell className="px-4 py-2 border-b border-gray-300">{tenant.name}</Table.Cell>
+              <Table.Cell className="px-4 py-2 border-b border-gray-300">{tenant.flavor}</Table.Cell>
+              <Table.Cell className="px-4 py-2 border-b border-gray-300">{tenant.licenseType}</Table.Cell>
+              <Table.Cell className="px-4 py-2 border-b border-gray-300">
                 <span
                   className="text-blue-500 cursor-pointer hover:underline"
                   onClick={() => handleExpirationClick(tenant)}
@@ -134,7 +134,7 @@ function TenantTable({ tenants, onDelete, onLogClick, onDatapackClick }) {
                   {tenant.expirationDate}
                 </span>
               </Table.Cell>
-              <Table.Cell className="flex space-x-2">
+              <Table.Cell className="flex space-x-2 px-4 py-2 border-b border-gray-300">
                 <Button
                   onClick={() => onLogClick(tenant.name)}
                   className="text-blue-500 bg-transparent hover:text-blue-700"
