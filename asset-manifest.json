@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/slot-manager/static/css/main.df36e0d4.css",
-    "main.js": "/slot-manager/static/js/main.b008ec68.js",
+    "main.js": "/slot-manager/static/js/main.f1473a9f.js",
     "static/js/453.7ce73eee.chunk.js": "/slot-manager/static/js/453.7ce73eee.chunk.js",
     "index.html": "/slot-manager/index.html",
     "main.df36e0d4.css.map": "/slot-manager/static/css/main.df36e0d4.css.map",
-    "main.b008ec68.js.map": "/slot-manager/static/js/main.b008ec68.js.map",
+    "main.f1473a9f.js.map": "/slot-manager/static/js/main.f1473a9f.js.map",
     "453.7ce73eee.chunk.js.map": "/slot-manager/static/js/453.7ce73eee.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.df36e0d4.css",
-    "static/js/main.b008ec68.js"
+    "static/js/main.f1473a9f.js"
   ]
 }
