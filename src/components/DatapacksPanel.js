@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextInput, Label, Select, Table, Checkbox } from "flowbite-react";
 
 const DatapacksPanel = ({ datapacks }) => {
   const [filterText, setFilterText] = useState("");
   const [filterAll, setFilterAll] = useState("all");
   const [checked, setChecked] = useState({});
+  const [checkAllLabel, setCheckAllLabel] = useState("Check all");
 
   const handleFilterTextChange = (e) => setFilterText(e.target.value);
   const handleFilterAllChange = (e) => setFilterAll(e.target.value);
@@ -35,13 +36,23 @@ const DatapacksPanel = ({ datapacks }) => {
     }));
   };
 
-  const handleUncheckAll = () => {
-    const uncheckedItems = {};
-    datapacks.forEach((datapack) => {
-      uncheckedItems[datapack.id] = false;
+  const handleToggleCheckAll = () => {
+    const isCheckingAll = checkAllLabel === "Check all";
+    const updatedChecked = {};
+    filteredDatapacks.forEach((datapack) => {
+      updatedChecked[datapack.id] = isCheckingAll;
     });
-    setChecked(uncheckedItems);
+    setChecked((prevChecked) => ({
+      ...prevChecked,
+      ...updatedChecked,
+    }));
   };
+
+  useEffect(() => {
+    const atLeastOneChecked = Object.values(checked).some((isChecked) => isChecked);
+
+    setCheckAllLabel(atLeastOneChecked ? "Uncheck all" : "Check all");
+  }, [checked, filteredDatapacks]); 
 
   return (
     <div className="space-y-4">
@@ -71,10 +82,10 @@ const DatapacksPanel = ({ datapacks }) => {
           <span
             color="gray"
             size="sm"
-            onClick={handleUncheckAll}
+            onClick={handleToggleCheckAll}
             className="inline text-sm p-2.5 text-blue-600 cursor-pointer hover:underline"
           >
-            Uncheck all
+            {checkAllLabel}
           </span>
         </div>
       </div>
