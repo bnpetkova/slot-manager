@@ -55,6 +55,7 @@ const TenantInfoForm = ({ onSubmit, onClose }) => {
           <p className="text-red-500">{errors.adminUser.message}</p>
         )}
       </div>
+      
       <div>
         <Label htmlFor="adminPassword">Admin Password</Label>
         <TextInput
