@@ -7,14 +7,15 @@ import LicenseManagementPanel from "./LicenseManagementPanel";
 
 const UnifiedModal = ({ open, onClose, onCreateTenant, datapacks }) => {
   const [activeTab, setActiveTab] = useState("TenantInfo");
-
-  const handleSubmit = (tenantData) => {
-    onCreateTenant(tenantData);
-    onClose();
-  };
+  const [tenantFormSubmit, setTenantFormSubmit] = useState(null); // to store form submit function
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+  };
+
+  // Set form submit handler for TenantInfo
+  const handleTenantFormSubmit = (submitHandler) => {
+    setTenantFormSubmit(() => submitHandler);
   };
 
   return (
@@ -58,20 +59,30 @@ const UnifiedModal = ({ open, onClose, onCreateTenant, datapacks }) => {
         {activeTab === "TenantInfo" && (
           <TenantInfoForm
             onSubmit={(tenantData) => {
-              handleSubmit(tenantData);
+              onCreateTenant(tenantData); // Call tenant creation
+              onClose(); // Close modal after creation
             }}
+            onSetFormSubmit={handleTenantFormSubmit} // Pass down submit handler
             onClose={onClose}
           />
         )}
         {activeTab === "Licensing" && <LicenseManagementPanel />}
         {activeTab === "Datapacks" && <DatapacksPanel datapacks={datapacks} />}
-        {activeTab === "DocumentStore" && (
-          <DocumentStoreForm onClose={onClose} />
-        )}
+        {activeTab === "DocumentStore" && <DocumentStoreForm onClose={onClose} />}
       </Modal.Body>
       <Modal.Footer>
         <Button color="gray" onClick={onClose}>
           Close
+        </Button>
+        <Button
+          color="gray"
+          onClick={() => {
+            if (tenantFormSubmit) {
+              tenantFormSubmit(); // Trigger form submit if on TenantInfo tab
+            }
+          }}
+        >
+          Create
         </Button>
       </Modal.Footer>
     </Modal>

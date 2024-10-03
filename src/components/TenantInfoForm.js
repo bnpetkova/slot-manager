@@ -1,13 +1,18 @@
 // TenantInfoForm.js
 import React from "react";
-import { Label, TextInput, Checkbox, Button } from "flowbite-react";
+import { Label, TextInput, Checkbox } from "flowbite-react";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
-const TenantInfoForm = ({ onSubmit, onClose }) => {
+const TenantInfoForm = ({ onSubmit, onClose, onSetFormSubmit }) => {
   const { register, handleSubmit: reactHookFormHandleSubmit, formState: { errors } } = useForm();
   const onFormSubmit = (data) => {
     onSubmit(data); 
   };
+  useEffect(() => {
+    onSetFormSubmit(reactHookFormHandleSubmit(onSubmit));
+  }, [onSetFormSubmit, reactHookFormHandleSubmit, onSubmit]);
+
 
   return (
     <form onSubmit={reactHookFormHandleSubmit(onFormSubmit)} className="space-y-4">
@@ -86,12 +91,7 @@ const TenantInfoForm = ({ onSubmit, onClose }) => {
           Overwrite Existing
         </Label>
       </div>
-      <div className="flex justify-end space-x-2">
-        <Button color="gray" type="submit">
-          Create
-        </Button>
-        
-      </div>
+     
     </form>
   );
 };
