@@ -11,7 +11,7 @@ const mockDatapacks = [
 
 describe('DatapacksPanel', () => {
   test('filters datapacks by text', () => {
-    render(<DatapacksPanel datapacks={mockDatapacks} />);
+    render(<DatapacksPanel datapacks={mockDatapackss} />);
     
 
     fireEvent.change(screen.getByLabelText(/Filter \(Name, Description\)/i), {
