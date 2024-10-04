@@ -8,7 +8,7 @@ import LoadingAnimation from "./LoadingAnimation";
 import { Table, Button } from "flowbite-react";
 import LicenseManagementModal from "./LicenseManagementModal";
 
-function TenantTable({ tenants, onDelete, onLogClick, onDatapackClick }) {
+function TenantTable({ tenants, onDelete, onLogClick, onDatapackClick, isCreating, temporaryTenant, handleTenantClick }) {
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const [selectedTenant, setSelectedTenant] = useState(null);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
@@ -97,6 +97,7 @@ function TenantTable({ tenants, onDelete, onLogClick, onDatapackClick }) {
               key={tenant.id}
               className="border-collapse border border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
             >
+             
               <Table.Cell className="px-4 py-2 border-b border-gray-300">
                 {tenant.status === "inprogress" && (
                   <LoadingAnimation
