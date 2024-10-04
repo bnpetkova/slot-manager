@@ -1,19 +1,16 @@
-// DocumentStoreForm.js
 import React from "react";
 import { Label, TextInput, Button, Modal } from "flowbite-react";
+import "../styles/UnifiedModal.css";
 
 const DocumentStoreForm = ({ onClose }) => {
-  // Define form handling logic here
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Handle form submission
     onClose();
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Add form fields here */}
+    <form onSubmit={handleSubmit} className="modal-fixed-size">
       <div>
         <Label htmlFor="documentName">Document Name</Label>
         <TextInput id="documentName" placeholder="Enter document name" />

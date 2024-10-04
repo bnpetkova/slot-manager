@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { TextInput, Label, Select, Table, Checkbox } from "flowbite-react";
-
+import "../styles/UnifiedModal.css";
 const DatapacksPanel = ({ datapacks }) => {
   const [filterText, setFilterText] = useState("");
   const [filterAll, setFilterAll] = useState("all");
@@ -55,7 +55,7 @@ const DatapacksPanel = ({ datapacks }) => {
   }, [checked, filteredDatapacks]); 
 
   return (
-    <div className="space-y-4">
+    <div className="modal-fixed-size">
       <div className="flex space-x-4 items-center">
         <div>
           <Label htmlFor="filterText">Filter (Name, Description)</Label>

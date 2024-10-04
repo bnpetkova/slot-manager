@@ -1,9 +1,10 @@
 import { Label, TextInput, Select } from "flowbite-react";
+import "../styles/UnifiedModal.css";
 
 const LicenseManagementPanel = () => {
   return (
-    <div className="max-h-screen overflow-y-auto">
-      <div className="h-96 overflow-y-auto p-4">
+    <div className="modal-fixed-size">
+      <div className="">
         <div className="">
           <Label htmlFor="licenseType">License Type</Label>
           <Select id="licenseType">

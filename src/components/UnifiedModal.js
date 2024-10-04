@@ -5,6 +5,7 @@ import DocumentStoreForm from "./DocumentStore";
 import DatapacksPanel from "./DatapacksPanel";
 import LicenseManagementPanel from "./LicenseManagementPanel";
 
+
 const UnifiedModal = ({ open, onClose, onCreateTenant, datapacks }) => {
   const [activeTab, setActiveTab] = useState("TenantInfo");
   const [tenantFormSubmit, setTenantFormSubmit] = useState(null); // to store form submit function

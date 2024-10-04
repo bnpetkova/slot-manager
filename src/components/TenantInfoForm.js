@@ -3,6 +3,7 @@ import React from "react";
 import { Label, TextInput, Checkbox } from "flowbite-react";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import "../styles/UnifiedModal.css";
 
 const TenantInfoForm = ({ onSubmit, onClose, onSetFormSubmit }) => {
   const { register, handleSubmit: reactHookFormHandleSubmit, formState: { errors } } = useForm();
@@ -15,7 +16,7 @@ const TenantInfoForm = ({ onSubmit, onClose, onSetFormSubmit }) => {
 
 
   return (
-    <form onSubmit={reactHookFormHandleSubmit(onFormSubmit)} className="space-y-4">
+    <form onSubmit={reactHookFormHandleSubmit(onFormSubmit)} className="modal-fixed-size">
       <div>
         <Label htmlFor="tenantName">Tenant Name</Label>
         <TextInput

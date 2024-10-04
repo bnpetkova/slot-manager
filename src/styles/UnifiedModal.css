@@ -1,0 +1,6 @@
+.modal-fixed-size {
+    width: 600px; /* Or any desired fixed width */
+    height: 300px; /* Or any desired fixed height */
+    overflow-y: auto; /* Enable scrolling if content exceeds modal height */
+  }
+  
