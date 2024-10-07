@@ -8,7 +8,15 @@ import LoadingAnimation from "./LoadingAnimation";
 import { Table, Button } from "flowbite-react";
 import LicenseManagementModal from "./LicenseManagementModal";
 
-function TenantTable({ tenants, onDelete, onLogClick, onDatapackClick, isCreating, temporaryTenant, handleTenantClick }) {
+function TenantTable({
+  tenants,
+  onDelete,
+  onLogClick,
+  onDatapackClick,
+  isCreating,
+  temporaryTenant,
+  handleTenantClick,
+}) {
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const [selectedTenant, setSelectedTenant] = useState(null);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
@@ -92,12 +100,22 @@ function TenantTable({ tenants, onDelete, onLogClick, onDatapackClick, isCreatin
           <Table.HeadCell>Actions</Table.HeadCell>
         </Table.Head>
         <Table.Body>
+          {isCreating && temporaryTenant && (
+            <Table.Row key="temporary-tenant" className="border-b">
+              <Table.Cell colSpan={6}>
+                <LoadingAnimation
+                  tenantName={temporaryTenant.tenantName}
+                  onTenantClick={handleTenantClick}
+                />
+              </Table.Cell>
+            </Table.Row>
+          )}
+
           {sortedTenants.map((tenant) => (
             <Table.Row
               key={tenant.id}
               className="border-collapse border border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
             >
-             
               <Table.Cell className="px-4 py-2 border-b border-gray-300">
                 {tenant.status === "inprogress" && (
                   <LoadingAnimation
@@ -124,9 +142,15 @@ function TenantTable({ tenants, onDelete, onLogClick, onDatapackClick, isCreatin
                   />
                 )}
               </Table.Cell>
-              <Table.Cell className="px-4 py-2 border-b border-gray-300">{tenant.name}</Table.Cell>
-              <Table.Cell className="px-4 py-2 border-b border-gray-300">{tenant.flavor}</Table.Cell>
-              <Table.Cell className="px-4 py-2 border-b border-gray-300">{tenant.licenseType}</Table.Cell>
+              <Table.Cell className="px-4 py-2 border-b border-gray-300">
+                {tenant.name}
+              </Table.Cell>
+              <Table.Cell className="px-4 py-2 border-b border-gray-300">
+                {tenant.flavor}
+              </Table.Cell>
+              <Table.Cell className="px-4 py-2 border-b border-gray-300">
+                {tenant.licenseType}
+              </Table.Cell>
               <Table.Cell className="px-4 py-2 border-b border-gray-300">
                 <span
                   className="text-blue-500 cursor-pointer hover:underline"

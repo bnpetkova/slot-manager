@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button, Card } from "flowbite-react";
 import CopyExistingTenant from "../components/CopyExistingTenant.js";
-import LoadingAnimation from "../components/LoadingAnimation.js";
 import UnifiedModal from "../components/UnifiedModal.js";
 import TenantTable from "../components/TenantTable.js";
 import StartingTenants from "../utils/StartingTenants.js";
@@ -38,7 +37,7 @@ function TenantsPage() {
   const closeUnifiedModal = () => setIsModalOpen(false);
 
   const handleAddTenant = (newTenant) => {
-    setTemporaryTenant(newTenant);
+    setTemporaryTenant({ ...newTenant, status: "inprogress"});
     setIsCreating(true);
     setShowCreationLog(false);
     if (!newTenant.tenantName) {
@@ -131,6 +130,9 @@ function TenantsPage() {
           onDelete={handleDelete}
           onLogClick={handleLogClick}
           onDatapackClick={handleDatapackClick}
+          isCreating={isCreating}
+          temporaryTenant={temporaryTenant}
+          handleTenantClick={handleTenantClick}
         />
 
         <UnifiedModal
@@ -179,12 +181,6 @@ function TenantsPage() {
           </Card>
         )}
 
-        {isCreating && temporaryTenant && (
-          <LoadingAnimation
-            tenantName={temporaryTenant.tenantName}
-            onTenantClick={handleTenantClick}
-          />
-        )}
       </div>
     </div>
   );
